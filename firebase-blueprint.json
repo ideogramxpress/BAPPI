@@ -1,0 +1,81 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile and role information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "role": { "type": "string", "enum": ["SuperAdmin", "Admin", "OperationsManager", "FinanceManager", "SupportAgent", "Moderator", "Vendor", "Customer"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Vendor": {
+      "title": "Vendor",
+      "description": "Vendor marketplace information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "storeName": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected", "suspended"] },
+        "riskScore": { "type": "number" },
+        "walletBalance": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "storeName", "status"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Marketplace product information",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "vendorId": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "price": { "type": "number" },
+        "categoryId": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected", "flagged"] },
+        "stock": { "type": "integer" },
+        "images": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["vendorId", "name", "price", "status"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer order information",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "customerId": { "type": "string" },
+        "totalAmount": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "processing", "shipped", "out_for_delivery", "delivered", "returned", "cancelled", "refunded"] },
+        "paymentStatus": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["customerId", "totalAmount", "status"]
+    },
+    "SiteSettings": {
+      "title": "SiteSettings",
+      "description": "Global site configuration",
+      "type": "object",
+      "properties": {
+        "maintenanceMode": { "type": "boolean" },
+        "siteName": { "type": "string" },
+        "commissionRate": { "type": "number" }
+      }
+    }
+  },
+  "firestore": {
+    "/users/{userId}": { "schema": "User", "description": "User profiles" },
+    "/vendors/{vendorId}": { "schema": "Vendor", "description": "Vendor profiles" },
+    "/products/{productId}": { "schema": "Product", "description": "Marketplace products" },
+    "/orders/{orderId}": { "schema": "Order", "description": "Customer orders" },
+    "/site_settings/global": { "schema": "SiteSettings", "description": "Global settings" }
+  }
+}

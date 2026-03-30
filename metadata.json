@@ -1,0 +1,9 @@
+{
+  "name": "Enterprise Multi-Vendor Marketplace",
+  "description": "A production-ready, enterprise-level multi-vendor ecommerce platform with role-based dashboards, CMS control, and integrated logistics.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}
